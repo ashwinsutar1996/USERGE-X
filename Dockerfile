@@ -58,5 +58,9 @@ RUN pip install -U pip setuptools wheel && pip install -r requirements.txt
 # copy the content of the local src directory to the working directory
 COPY . .
 
+# adding email and username to the bot
+RUN git config --global user.email "ashwinsutar1996@gmail.com"
+RUN git config --global user.name "ashwinsutar1996"
+
 # command to run on container start
 CMD [ "bash", "./run" ]
