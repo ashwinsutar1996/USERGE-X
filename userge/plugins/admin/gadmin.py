@@ -592,12 +592,7 @@ async def unpin_msgs(message: Message):
         "examples": [
             "{tr}pin [reply to chat message]",
             "{tr}pin -l [reply to chat message]",
-<<<<<<< HEAD
-            "{tr}pin -me [send to private chat]",
-            
-=======
             "{tr}pin -both [send to private chat]",
->>>>>>> fb63464e2465d882f683765b9f3ca198d16cbca2
         ],
     },
     check_pin_perm=True,
