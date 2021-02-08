@@ -7,6 +7,7 @@
 #
 # All rights reserved.
 
+
 import asyncio
 import shutil
 import time
@@ -15,7 +16,7 @@ from pyrogram.types import User
 
 from userge import Config, Message, get_collection, userge
 from userge.core.ext import RawClient
-from userge.utils import terminate
+from userge.utils import runcmd, terminate
 
 SAVED_SETTINGS = get_collection("CONFIGS")
 DISABLED_CHATS = get_collection("DISABLED_CHATS")
@@ -47,6 +48,7 @@ async def _init() -> None:
         "header": "Restarts the bot and reload all plugins",
         "flags": {
             "-h": "restart heroku dyno",
+            "-rp": "reload userge-plugins repo (for zeet users)",
             "-t": "clean temp loaded plugins",
             "-d": "clean working folder",
         },
@@ -62,6 +64,10 @@ async def restart_(message: Message):
     LOG.info("USERGE-X Services - Restart initiated")
     if "t" in message.flags:
         shutil.rmtree(Config.TMP_PATH, ignore_errors=True)
+    if "rp" in message.flags:
+        await message.edit("Restarting <b>logs</b>...")
+        await runcmd("bash run")
+        asyncio.get_event_loop().create_task(userge.restart())
     if "d" in message.flags:
         shutil.rmtree(Config.DOWN_PATH, ignore_errors=True)
     if Config.HEROKU_APP and "h" in message.flags:

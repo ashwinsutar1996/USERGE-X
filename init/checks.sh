@@ -8,6 +8,8 @@
 #
 # All rights reserved.
 
+. init/unofficial_repo_checks.sh
+
 _checkBashReq() {
     log "Checking Bash Commands ..."
     command -v jq &> /dev/null || quit "Required command : jq : could not be found !"
@@ -158,29 +160,6 @@ _checkUpstreamRepo() {
     fetchUpstream || updateUpstream && fetchUpstream || quit "Invalid UPSTREAM_REPO var !"
     fetchBranches
     updateBuffer
-    deleteLastMessage
-}
-
-_checkUnoffPlugins() {
-    editLastMessage "Checking USERGE-X [Extra] Plugins ..."
-    if test $LOAD_UNOFFICIAL_PLUGINS = true; then
-        editLastMessage "\tLoading USERGE-X [Extra] Plugins ..."
-        replyLastMessage "\t\tClonning ashwinstr/Userge-Plugins.git ..."
-        gitClone --depth=1 https://github.com/ashwinstr/Userge-Plugins.git
-        editLastMessage "\t\tUpgrading PIP ..."
-        upgradePip
-        editLastMessage "\t\tInstalling Requirements ..."
-        installReq Userge-Plugins
-        editLastMessage "\t\tCleaning ..."
-        rm -rf userge/plugins/unofficial/
-        mv Userge-Plugins/plugins/ userge/plugins/unofficial/
-        cp -r Userge-Plugins/resources/* resources/
-        rm -rf Userge-Plugins/
-        deleteLastMessage
-        editLastMessage "\tUSERGE-X [Extra] Plugins Loaded Successfully !"
-    else
-        editLastMessage "\tUSERGE-X [Extra] Plugins Disabled !"
-    fi
     deleteLastMessage
 }
 
