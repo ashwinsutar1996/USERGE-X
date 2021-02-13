@@ -8,7 +8,6 @@
 #
 # All rights reserved.
 
-. init/unofficial_repo_checks.sh
 
 _checkBashReq() {
     log "Checking Bash Commands ..."
